@@ -469,8 +469,8 @@ ggplot(data=dt51_COVID_19) +
 
 library(sf)
 library(rnaturalearth)
-#library(rnaturalearthdata)
-#library(rnaturalearthhires)
+library(rnaturalearthdata)
+library(rnaturalearthhires)
 
 #world <- ne_countries(scale = "large", returnclass = "sf")
 
@@ -497,8 +497,8 @@ world_mapdt_COVID_19 <- merge(world[,c('admin', 'adm0_a3', "iso_a2",'continent',
 world_mapdt_COVID_19 <- world_mapdt_COVID_19[!duplicated(world_mapdt_COVID_19$adm0_a3),]
 
 
-ggplot(data = world_mapdt_COVID_19) +
-geom_sf(aes(fill = cases)) +
+ ggplot(data = world_mapdt_COVID_19) +
+geom_sf(aes(fill = cases), size = 0.1) +
   coord_sf(xlim = c(-180, 180), ylim = c(-90, 90), expand = FALSE)+
     scale_fill_viridis_c(na.value = "red")+
   labs(title= paste("Global Impact of COVID-19 as at", max(dt_COVID_19$date_rep) )
@@ -506,8 +506,9 @@ geom_sf(aes(fill = cases)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 
+
 ggplot(data = world_mapdt_COVID_19) +
-geom_sf(aes(fill = cases), color = "black") +
+geom_sf(aes(fill = cases), color = "black", size = 0.1) +
     coord_sf(xlim = c(-180, 180), ylim = c(-90, 90), expand = FALSE)+
     scale_fill_viridis_c(option = "C", na.value = "red")+
   labs(title=paste("Global Impact of COVID-19 as at", max(dt_COVID_19$date_rep) ),
@@ -516,7 +517,7 @@ geom_sf(aes(fill = cases), color = "black") +
 
 
   ggplot(data = world_mapdt_COVID_19) +
-  geom_sf(aes(fill = deaths)) +
+  geom_sf(aes(fill = deaths), size = 0.1) +
       coord_sf(xlim = c(-180, 180), ylim = c(-90, 90), expand = FALSE)+
     scale_fill_viridis_c(option = "plasma", na.value = "green" )+
   labs(title=paste("Global Impact of COVID-19 as at", max(dt_COVID_19$date_rep) ),

@@ -1,0 +1,603 @@
+---
+title: "COVID-19-Geographic-Disbtribution-Worldwide"
+author: "Reinp"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    keep_md: yes
+  pdf_document: default
+  word_document: default
+---
+
+# R Programming
+
+## Set Chunk requirements
+
+```{r setup, include=TRUE}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+#echo=FALSE indicates that the code will not be shown in the final document 
+#(though any results/output would still be displayed).
+
+#include=FALSE to have the chunk evaluated, but neither the code nor its output displayed
+
+# warning=FALSE and message=FALSE suppress any R warnings or messages from being included 
+#in the final document
+```
+
+## loading Relevant packages and Data Set
+
+```{r Import relevant packages}
+#Import relevant packages
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+library(scales)
+library(janitor)
+library("readxl") #loading the excel files
+
+#setwd('F:/Documents/Reinp/GitHub Respositories/COVID-19-Geographic-Disbtribution-Worldwide')
+
+#dt_COVID_19_raw <- read_tsv('data/COVID-19-geographic-disbtribution-worldwide-data.txt', na = character() )
+
+#Country_Code_location <- read_tsv('data/Country_Code_and_location.txt', na = character() )
+
+
+dt_COVID_19_raw <- read_tsv('https://raw.githubusercontent.com/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/main/data/COVID-19-geographic-disbtribution-worldwide-data.txt' , na = character() )
+
+
+Country_Code_location <- read_tsv('https://raw.githubusercontent.com/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/main/data/Country_Code_and_location.txt', na = character() )
+
+sapply(Country_Code_location,function(x) sum(is.na(x)))
+
+
+dt_COVID_19_raw1 <- merge(dt_COVID_19_raw %>% select(1,2,3,4,5,6,7)%>%
+                       mutate(dateRep = dmy(dateRep))%>%
+                       mutate(month_name = month(dateRep, label = TRUE))%>%
+                       mutate(year = factor(year(dateRep), ordered = TRUE))%>%
+                       mutate(week_year = floor_date(dateRep, unit = "week"))%>%
+                       mutate(month_year = floor_date(dateRep, unit = "month"))
+                     , Country_Code_location %>% select(1,2,3,4,5,6,7,8),
+                     by.x = "countriesAndTerritories" , 
+                     by.y = "Countries",
+                     all.x = TRUE)
+
+dt_COVID_19_raw1 <- dt_COVID_19_raw1 %>%
+  janitor:: clean_names()%>%
+  dplyr:: rename(countries = countries_and_territories)
+
+
+duration_d <- data.frame(rng_days = seq(min(dt_COVID_19_raw1$date_rep), max(dt_COVID_19_raw1$date_rep),
+                           by = 'day'))%>% 
+  mutate(duration_days = factor(row_number(), ordered = TRUE))%>%
+                       mutate(week_year = floor_date(rng_days, unit = "week"))%>%
+                       mutate(month_year = floor_date(rng_days, unit = "month"))
+
+
+duration_w <- data.frame(rng_weeks = seq(min(dt_COVID_19_raw1$week_year), max(dt_COVID_19_raw1$week_year),
+                           by = 'week'))%>% 
+  mutate(duration_weeks = factor(row_number(), ordered = TRUE))
+
+duration_w_d <- merge(duration_w, duration_d,
+                     by.x = "rng_weeks" , 
+                     by.y = "week_year",
+                     all.x = TRUE)
+
+duration_m <- data.frame(rng_months = seq(min(dt_COVID_19_raw1$month_year), max(dt_COVID_19_raw1$month_year),
+                           by = 'month'))%>% 
+  mutate(duration_months = factor(row_number(), ordered = TRUE))
+
+
+duration_m_w_d <- merge(duration_m, duration_w_d,
+                     by.x = "rng_months" , 
+                     by.y = "month_year",
+                     all.x = TRUE)
+
+
+dt_COVID_19 <- merge(dt_COVID_19_raw1, duration_m_w_d %>% select(5,6,4,2),
+                     by.x = "date_rep" , 
+                     by.y = "rng_days",
+                     all.x = TRUE) 
+
+
+view(dt_COVID_19)
+
+glimpse(dt_COVID_19)
+
+
+# check number of missing values in our data
+sapply(dt_COVID_19,function(x) sum(is.na(x)))
+
+
+
+```
+
+
+## Structure of the Data
+
+```{r structure of data}
+
+head(dt_COVID_19)
+
+tail(dt_COVID_19)
+
+# How many variables and observations are there?
+ncol(dt_COVID_19)
+
+nrow(dt_COVID_19)
+
+#learn more about the dataset
+
+#help(dt_COVID_19)
+#??dt_COVID_19
+str(dt_COVID_19)
+class(dt_COVID_19)
+typeof(dt_COVID_19) 
+length(dt_COVID_19)
+names(dt_COVID_19) #display variable names
+#attributes(ds_sd) #names(ds_sd), class(ds_sd), row.names(ds_sd)
+```
+
+
+## Missing data
+
+```{R}
+
+which(!complete.cases(dt_COVID_19))
+
+which(is.na(dt_COVID_19$cases)) #check for missing values
+which(is.na(dt_COVID_19$deaths)) #check for missing values
+
+```
+
+
+## Descriptive Statistics
+
+```{R}
+library(knitr)
+library(mosaic)
+
+#FormulaSyntax
+
+
+kable(cbind(sum(~cases, data=dt_COVID_19), sum(~deaths, data=dt_COVID_19)),
+      col.names = cbind("Total_Cases", "Total_Deaths"))
+
+
+kable(cbind(sum(cases~ countries, data=dt_COVID_19), sum(deaths~ countries, data=dt_COVID_19)),
+      col.names = cbind("Total_Cases", "Total_Deaths"))
+
+
+kable(cbind(sum(cases~ continent_geographical,data=dt_COVID_19), sum(
+  deaths~continent_geographical,data=dt_COVID_19)), col.names=cbind("Total_Cases","Total_Deaths"))
+
+
+#kable(cbind(sum(cases~ month_name+year,data=dt_COVID_19), 
+#sum(deaths~month_name+year,data=dt_COVID_19)), col.names=cbind("Total_Cases","Total_Deaths"))
+
+kable(cbind(sum(cases~ month_year,data=dt_COVID_19), sum(
+  deaths~month_year,data=dt_COVID_19)), col.names=cbind("Total_Cases","Total_Deaths"))
+
+kable(cbind(sum(cases~ week_year,data=dt_COVID_19), sum(
+  deaths~week_year,data=dt_COVID_19)), col.names=cbind("Total_Cases","Total_Deaths"))
+
+
+kable(cbind(sum(cases~ duration_days, data=dt_COVID_19), 
+sum(deaths~ duration_days, data=dt_COVID_19)), col.names=cbind("Total_Cases","Total_Deaths")
+, row.names = TRUE )
+
+kable(cbind(sum(cases~ date_rep, data=dt_COVID_19), 
+sum(deaths~ date_rep, data=dt_COVID_19)), col.names=cbind("Total_Cases","Total_Deaths"))
+
+
+##one continous variable
+favstats(~cases, data=dt_COVID_19)[c("max", "mean","sd", "n")]
+favstats(~deaths, data=dt_COVID_19)[c("max", "mean","sd", "n")]
+
+##one continous one categorical
+
+favstats(cases~ countries, data=dt_COVID_19)[c("countries", "max", "mean", "sd", "n")]
+favstats(cases~ continent_geographical, data=dt_COVID_19)[c("continent_geographical","max",
+                                                            "mean","sd", "n")]
+favstats(cases~ month_year, data=dt_COVID_19)[c("month_year","max","mean","sd", "n")]
+favstats(cases~ week_year, data=dt_COVID_19)[c("week_year","max","mean","sd", "n")]
+
+favstats(cases~ duration_days, data=dt_COVID_19)[c("duration_days", "max", "mean","sd", "n")]
+favstats(cases~ date_rep, data=dt_COVID_19)[c("date_rep", "max", "mean","sd", "n")]
+
+
+favstats(deaths~ countries, data=dt_COVID_19)[c("countries", "max", "mean","sd", "n")]
+favstats(deaths~ continent_geographical, data=dt_COVID_19)[c("continent_geographical", "max",
+                                                             "mean","sd", "n")]
+favstats(deaths~ month_year, data=dt_COVID_19)[c("month_year","max","mean","sd", "n")]
+favstats(deaths~ week_year, data=dt_COVID_19)[c("week_year","max","mean","sd", "n")]
+favstats(deaths~ duration_days, data=dt_COVID_19)[c("duration_days","max", "mean","sd", "n")]
+favstats(deaths~ date_rep, data=dt_COVID_19)[c("date_rep","max", "mean","sd", "n")]
+
+
+
+##one continous two categorical
+
+#favstats(cases~ month_name+year, data=dt_COVID_19)[c("month_name.year", "max", "mean","sd", "n")]
+
+#favstats(deaths~ month_name+year, data=dt_COVID_19)[c("month_name.year","max", "mean","sd", "n")]
+
+
+```
+
+
+## Grouping the data
+
+```{r}
+
+dt1_COVID_19 <- dt_COVID_19%>% 
+  group_by(continent_geographical) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt1_COVID_19
+
+
+dt11_COVID_19 <- dt_COVID_19%>% 
+  group_by(continent_geographical, countries, longitude, latitude) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt11_COVID_19
+
+
+dt3_COVID_19 <-dt_COVID_19%>% 
+  group_by(date_rep, duration_days) %>% 
+ summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt3_COVID_19
+
+
+
+dt31_COVID_19 <-dt_COVID_19%>% 
+  group_by(date_rep, duration_days, continent_geographical) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt31_COVID_19
+
+
+dt32_COVID_19 <-dt_COVID_19%>% 
+  group_by(date_rep, duration_days, covid_19_spread) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt32_COVID_19
+
+
+dt33_COVID_19 <-dt_COVID_19%>% 
+  group_by(date_rep, duration_days, continent_geographical, countries) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt33_COVID_19
+
+
+dt4_COVID_19 <-dt_COVID_19%>% 
+  group_by(week_year) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt4_COVID_19
+
+
+dt41_COVID_19 <-dt_COVID_19%>% 
+  group_by(week_year, continent_geographical) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt41_COVID_19
+
+
+dt42_COVID_19 <-dt_COVID_19%>% 
+  group_by(week_year, continent_geographical, countries) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt42_COVID_19
+
+dt43_COVID_19 <-dt_COVID_19%>% 
+  group_by(week_year, covid_19_spread) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt43_COVID_19
+
+
+dt5_COVID_19 <-dt_COVID_19%>% 
+  group_by(month_year) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt5_COVID_19
+
+
+dt51_COVID_19 <-dt_COVID_19%>% 
+  group_by(month_year, continent_geographical) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt51_COVID_19
+
+
+dt52_COVID_19 <-dt_COVID_19%>% 
+  group_by(month_year, continent_geographical, countries) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt52_COVID_19
+
+dt53_COVID_19 <-dt_COVID_19%>% 
+  group_by(month_year, covid_19_spread) %>% 
+  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop')
+dt53_COVID_19
+
+
+```
+
+
+## ggplot Data Visualization 
+
+### Line Graphs
+
+```{R}
+
+library(reshape2)
+library(plotly)
+
+
+ggplot(data=melt(dt3_COVID_19, id=c("date_rep", "duration_days"))) +
+  geom_line(aes(x=date_rep, y=value, colour=variable))+
+  scale_colour_manual(name="", values=c("orange","red"))+
+  scale_x_date(date_labels = "%d-%b-%y", date_breaks = "30 days") +
+  scale_y_continuous(labels = scales::comma, n.breaks = 10
+    #breaks = seq(0, round(max(dt3_COVID_19$cases), digits = -5), by = 50000)
+    )+ 
+  theme(axis.text.x = element_text(angle = 90, size = 8, face = "bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(title="Daily Worldwide Trend of COVID-19", x="day_date", y ="Total No.")
+
+
+ggplot(data=melt(dt4_COVID_19, id=c("week_year"))) +
+  geom_line(aes(x=week_year, y=value, colour=variable))+
+  scale_colour_manual(name="", values=c("orange","red"))+
+  scale_x_date(date_labels = "%d-%b-%y", date_breaks = "4 weeks") +
+  scale_y_continuous(labels = scales::comma, n.breaks = 10
+    #breaks = seq(0, round(max(dt4_COVID_19$cases), digits = -5), by = 500000)
+    )+ 
+  theme(axis.text.x = element_text(angle = 90, size = 8, face = "bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(title="Weekly Worldwide Trend of COVID-19", x="week_date", y ="Total No.")
+
+
+ggplot(data=melt(dt5_COVID_19, id=c("month_year"))) +
+  geom_line(aes(x=month_year, y=value, colour=variable))+
+  scale_colour_manual(name="", values=c("orange","red"))+
+  scale_x_date(date_labels = "%b-%y", date_breaks = "1 month") +
+  scale_y_continuous(labels = scales::comma, n.breaks = 12
+    #breaks = seq(0, round(max(dt5_COVID_19$cases), digits = -7), by = 1000000)
+                     )+ 
+  theme(axis.text.x = element_text(angle = 90, size = 8, face = "bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(title="Monthly Worldwide Trend of COVID-19", x="month_date", y ="Total No.")
+
+```
+
+
+```{R}
+
+ggplot(data=dt31_COVID_19) +
+  geom_line(aes(x=date_rep, y=cases, color=continent_geographical))+
+  scale_colour_manual(name="Continent", values=c("black","red", "green", "blue", "orange", 
+                                                 "brown","darkmagenta"))+
+  scale_x_date(date_labels = "%d-%b-%y", date_breaks = "30 days") +
+  scale_y_continuous(labels = scales::comma, n.breaks = 12
+    #breaks = seq(0, round(max(dt31_COVID_19$cases), digits = -4), by = 20000)
+                     )+
+  theme(legend.position="bottom", 
+        axis.text.x = element_text(angle = 90, size = 8, face = "bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(title="Daily Continent Trend of COVID-19 Cases",x="day_date", y = "Total No.")+
+  guides(col = guide_legend(ncol = 4))
+
+
+ggplot(data=dt31_COVID_19) +
+  geom_line(aes(x=date_rep, y=deaths, color=continent_geographical))+
+  scale_colour_manual(name="Continent", values=c("black","red", "green", "blue", "orange", 
+                                                 "brown","darkmagenta"))+
+  scale_x_date(date_labels = "%d-%b-%y", date_breaks = "30 days") +
+  scale_y_continuous(labels = scales::comma, n.breaks = 12
+    #breaks = seq(0, round(max(dt31_COVID_19$deaths), digits = -3), by = 500)
+                     )+
+  theme(legend.position="bottom",
+        axis.text.x = element_text(angle = 90, size = 8, face = "bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(title="Daily Continent Trend of COVID-19 Deaths",x="day_date", y = "Total No.")+
+  guides(col = guide_legend(ncol = 4))
+
+
+ggplot(data=dt41_COVID_19) +
+  geom_line(aes(x=week_year, y=cases, color=continent_geographical))+
+  scale_colour_manual(name="Continent", values=c("black","red", "green", "blue", "orange", 
+                                                 "brown","darkmagenta"))+
+  scale_x_date(date_labels = "%d-%b-%y", date_breaks = "4 weeks") +
+  scale_y_continuous(labels = scales::comma, n.breaks = 12
+    #breaks = seq(0, round(max(dt41_COVID_19$cases), digits = -6), by = 200000)
+                     )+
+  theme(legend.position="bottom",
+        axis.text.x = element_text(angle = 90, size = 8, face = "bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(title="Weekly Continent Trend of COVID-19 Cases",x="week_date", y = "Total No.")+
+  guides(col = guide_legend(ncol = 4))
+
+
+ggplot(data=dt41_COVID_19) +
+  geom_line(aes(x=week_year, y=deaths, color=continent_geographical))+
+  scale_colour_manual(name="Continent", values=c("black","red", "green", "blue", "orange", 
+                                                 "brown","darkmagenta"))+
+  scale_x_date(date_labels = "%d-%b-%y", date_breaks = "4 weeks") +
+  scale_y_continuous(labels = scales::comma, n.breaks = 12
+    #breaks = seq(0, round(max(dt41_COVID_19$deaths), digits = -3), by = 2000)
+                     )+
+  theme(legend.position="bottom",
+        axis.text.x = element_text(angle = 90, size = 8, face = "bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(title="Weekly Continent Trend of COVID-19 Deaths",x="week_date", y = "Total No.")+
+  guides(col = guide_legend(ncol = 4))
+
+
+ggplot(data=dt51_COVID_19) +
+  geom_line(aes(x=month_year, y=cases, color=continent_geographical))+
+  scale_colour_manual(name="Continent", values=c("black","red", "green", "blue", "orange", 
+                                                 "brown","darkmagenta"))+
+  scale_x_date(date_labels = "%b-%y", date_breaks = "1 month") +
+  scale_y_continuous(labels = scales::comma, n.breaks = 12
+    #breaks = seq(0, round(max(dt51_COVID_19$cases), digits = -5), by = 500000)
+                     )+
+  theme(legend.position="bottom",
+        axis.text.x = element_text(angle = 90, size = 8, face = "bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(title="Monthly Continent Trend of COVID-19 Cases",x="month_date", y = "Total No.")+
+  guides(col = guide_legend(ncol = 4))
+
+
+ggplot(data=dt51_COVID_19) +
+  geom_line(aes(x=month_year, y=deaths, color=continent_geographical))+
+  scale_colour_manual(name="Continent", values=c("black","red", "green", "blue", "orange", 
+                                                 "brown","darkmagenta"))+
+  scale_x_date(date_labels = "%b-%y", date_breaks = "1 month") +
+  scale_y_continuous(labels = scales::comma, n.breaks = 12
+    #breaks = seq(0, round(max(dt51_COVID_19$deaths), digits = -3), by = 10000)
+                     )+
+  theme(legend.position="bottom",
+        axis.text.x = element_text(angle = 90, size = 8, face = "bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(title="Monthly Continent Trend of COVID-19 Deaths",x="month_date", y = "Total No.")+
+  guides(col = guide_legend(ncol = 4))
+
+
+```
+
+
+### Maps: geom_sf
+
+```{r}
+
+#library(devtools)
+#install_github("ropensci/rnaturalearthhires")
+
+library(sf)
+library(rnaturalearth)
+#library(rnaturalearthdata)
+#library(rnaturalearthhires)
+
+#world <- ne_countries(scale = "large", returnclass = "sf")
+
+world <- ne_countries(scale = 10 , returnclass = "sf")
+class(world)
+
+#plot_ly(world, color = I("gray90"), stroke = I("black"), span = I(1))
+
+#world %>%
+  #select(name) %>%
+  #print(n = 255)
+
+
+world_mapdt_COVID_19 <- merge(world[,c('admin', 'adm0_a3', "iso_a2",'continent','geometry')],
+                            dt_COVID_19 %>% 
+               group_by(countries, geo_id, countryterritory_code_adm0_a3,
+                  continent_geographical, covid_19_spread, pop_data2019) %>% 
+                  summarise(cases = sum(cases), deaths = sum(deaths), .groups = 'drop'),  
+                              by.x = "adm0_a3", 
+                              by.y = "countryterritory_code_adm0_a3", all=TRUE)
+
+
+#Keep all rows from x AND from y #Outerjoin
+world_mapdt_COVID_19 <- world_mapdt_COVID_19[!duplicated(world_mapdt_COVID_19$adm0_a3),]
+
+
+ggplot(data = world_mapdt_COVID_19) +
+geom_sf(aes(fill = cases)) +
+  coord_sf(xlim = c(-180, 180), ylim = c(-90, 90), expand = FALSE)+
+    scale_fill_viridis_c(na.value = "red")+
+  labs(title= paste("Global Impact of COVID-19 as at", max(dt_COVID_19$date_rep) )
+       ,x="longitude", y = "latitude")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data = world_mapdt_COVID_19) +
+geom_sf(aes(fill = cases), color = "black") +
+    coord_sf(xlim = c(-180, 180), ylim = c(-90, 90), expand = FALSE)+
+    scale_fill_viridis_c(option = "C", na.value = "red")+
+  labs(title=paste("Global Impact of COVID-19 as at", max(dt_COVID_19$date_rep) ),
+       x="longitude", y = "latitude")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+  ggplot(data = world_mapdt_COVID_19) +
+  geom_sf(aes(fill = deaths)) +
+      coord_sf(xlim = c(-180, 180), ylim = c(-90, 90), expand = FALSE)+
+    scale_fill_viridis_c(option = "plasma", na.value = "green" )+
+  labs(title=paste("Global Impact of COVID-19 as at", max(dt_COVID_19$date_rep) ),
+       x="longitude", y = "latitude")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+
+### Maps: geom_map
+
+```{r}
+world1 <- map_data("world")
+
+ggplot() +
+    geom_map(data = world1, map = world1, aes(x=long, y=lat, map_id = region),
+             color = "white", fill = "lightgray") +
+    ggtitle(paste("Global Cases of COVID-19 as at", max(dt_COVID_19$date_rep))) +
+    geom_point( data = dt11_COVID_19,
+               aes(x=longitude, y=latitude, colour=cases)) +
+  theme(legend.text = element_text(size=8), 
+        legend.title = element_text(colour="blue", size=10, face="bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(x="longitude", y = "latitude")+
+   scale_colour_gradient2(low="green", mid="yellow", high="red", 
+                          midpoint = max(dt11_COVID_19$cases)/2)
+    #scale_colour_gradient2()+
+  #scale_colour_gradient(low="green", high="red",guide = "colourbar")
+
+ggplot() +
+    geom_map(data = world1, map = world1, aes(x=long, y=lat, map_id = region),
+             color = "black", fill = "lightgray") +
+    ggtitle(paste("Global Deaths of COVID-19 as at", max(dt_COVID_19$date_rep))) +
+    geom_point( data = dt11_COVID_19,
+               aes(x=longitude, y=latitude, colour=deaths)) +
+  theme(legend.text = element_text(size=8), 
+        legend.title = element_text(colour="blue",size=10, face="bold"),
+        plot.title = element_text(hjust = 0.5))+
+  labs(x="longitude", y = "latitude") +
+   scale_colour_gradientn(colours = terrain.colors(10))
+
+
+
+ggplot() +
+    geom_map(data = world1, map = world1, aes(x=long, y=lat, map_id = region),
+             color = "white", fill = "lightgray") +
+    ggtitle(paste("Global Cases of COVID-19 as at", max(dt_COVID_19$date_rep))) +
+    geom_point(data = dt11_COVID_19,
+               aes(x=longitude, y=latitude, size=cases, colour=continent_geographical)) +
+  theme(legend.position = "right", 
+        legend.box = "vertical", 
+        legend.text = element_text(size=8), 
+        legend.title = element_text(colour="blue", size=9, face="bold"),
+        plot.title = element_text(hjust = 0.5)) +
+   guides(col = guide_legend(nrow = 7), size = guide_legend(ncol = 1))+
+  labs(colour = "continent", x="longitude", y = "latitude")
+
+
+  ggplot() +
+    geom_map(data = world1, map = world1, aes(x=long, y=lat, map_id = region),
+             color = "black", fill = "lightgray") +
+    ggtitle(paste("Global Deaths of COVID-19 as at", max(dt_COVID_19$date_rep))) +
+    geom_point(data = dt11_COVID_19,
+               aes(x=longitude, y=latitude, size=deaths, colour=continent_geographical)) +
+  theme(legend.position = "right", 
+        legend.box = "vertical", 
+        legend.text = element_text(size=8), 
+        legend.title = element_text(colour="blue", size=9, face="bold"),
+        plot.title = element_text(hjust = 0.5)) +
+   guides(col = guide_legend(nrow = 7), size = guide_legend(ncol = 1))+
+  labs(colour = "continent", x="longitude", y = "latitude")
+
+
+```
+
+
+
+
+
+
+
+
+

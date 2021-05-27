@@ -170,7 +170,7 @@ Papua_New_Guinea	PG	PNG	8776119	Oceania	Worldwide_Spread	-6.314993	143.95555	Pap
 Paraguay	PY	PRY	7044639	South America	Worldwide_Spread	-23.442503	-58.443832	Paraguay	PRY	America	7132530	PRY	South America	Paraguay
 Peru	PE	PER	32510462	South America	Worldwide_Spread	-9.189967	-75.015152	Peru	PER	America	32971846	PER	South America	Peru
 Philippines	PH	PHL	108116622	Asia	Asia_Spread	12.879721	121.774017	Philippines	PHL	Asia	109581085	PHL	Asia	Philippines
-Pitcairn_Islands	PN	PCN		Oceania	Worldwide_Spread	-24.703615	-127.439308	Pitcairn Islands	PCN	Oceania		PCN	Oceania	Pitcairn Islands
+Pitcairn_Islands	PN	PCN	50	Oceania	Worldwide_Spread	-24.703615	-127.439308	Pitcairn Islands	PCN	Oceania	47	PCN	Oceania	Pitcairn Islands
 Poland	PL	POL	37972812	Europe	NewEpiCentre_Europe	51.919438	19.145136	Poland	POL	Europe	37958138	POL	Europe	Poland
 Portugal	PT	PRT	10276617	Europe	NewEpiCentre_Europe	39.399872	-8.224454	Portugal	PRT	Europe	10295909	PRT	Europe	Portugal
 Puerto_Rico	PR	PRI	2933404	North America	Worldwide_Spread	18.220833	-66.590149	Puerto Rico	PRI	America	2860840	PRI	North America	Puerto Rico

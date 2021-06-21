@@ -74,7 +74,7 @@ Fiji	FJ	FJI	889955	Oceania	Worldwide_Spread	-16.578193	179.414413	Fiji	FJI	Ocean
 Finland	FI	FIN	5517919	Europe	NewEpiCentre_Europe	61.92411	25.748151	Finland	FIN	Europe	5525292	FIN	Europe	Finland
 France	FR	FRA	67012883	Europe	NewEpiCentre_Europe	46.227638	2.213749	France	FRA	Europe	67320216	FRA	Europe	France
 French_Polynesia	PF	PYF	279285	Oceania	Worldwide_Spread	-17.679742	-149.406843	French Polynesia	PYF	Oceania	280904	PYF	Oceania	French Polynesia
-French_Southern_and_Antarctic Lands	TF	ATF		Antarctica	Worldwide_Spread	-49.280366	69.348557	French Southern and Antarctic Lands	ATF	Antarctica		ATF	Seven seas (open ocean)	French Southern and Antarctic Lands
+French_Southern_and_Antarctic Lands	TF	ATF		Africa	Worldwide_Spread	-49.280366	69.348557	French Southern and Antarctic Lands	ATF	Africa		ATF	Seven seas (open ocean)	French Southern and Antarctic Lands
 Gabon	GA	GAB	2172578	Africa	Worldwide_Spread	-0.803689	11.609444	Gabon	GAB	Africa	2225728	GAB	Africa	Gabon
 Gambia	GM	GMB	2347696	Africa	Worldwide_Spread	13.443182	-15.310139	The Gambia	GMB	Africa	2416664	GMB	Africa	Gambia
 Georgia	GE	GEO	3996762	Europe / Asia	Europe/Asia_Spread	42.315407	43.356892	Georgia	GEO	Europe	3989175	GEO	Asia	Georgia
@@ -91,14 +91,14 @@ Guinea	GN	GIN	12771246	Africa	Worldwide_Spread	9.945587	-9.696645	Guinea	GIN	Afr
 Guinea_Bissau	GW	GNB	1920917	Africa	Worldwide_Spread	11.803749	-15.180413	Guinea-Bissau	GNB	Africa	1967998	GNB	Africa	Guinea-Bissau
 Guyana	GY	GUY	782775	South America	Worldwide_Spread	4.860416	-58.93018	Guyana	GUY	America	786559	GUY	South America	Guyana
 Haiti	HT	HTI	11263079	North America	Worldwide_Spread	18.971187	-72.285215	Haiti	HTI	America	11402533	HTI	North America	Haiti
-Heard_Island_and_McDonald-Islands	HM	HMD		Antarctica	Worldwide_Spread	-53.08181	73.504158	Heard Island and McDonald Islands	HMD	Antarctica		HMD	Seven seas (open ocean)	Heard Island and McDonald Islands
+Heard_Island_and_McDonald-Islands	HM	HMD		Oceania	Worldwide_Spread	-53.08181	73.504158	Heard Island and McDonald Islands	HMD	Oceania		HMD	Seven seas (open ocean)	Heard Island and McDonald Islands
 Honduras	HN	HND	9746115	North America	Worldwide_Spread	15.199999	-86.241905	Honduras	HND	America	9904608	HND	North America	Honduras
 Hong_Kong	HK	HKG	7507400	Asia	Source_China	22.396428	114.109497	Hong Kong	HKG	Asia	7496981	HKG	Asia	Hong Kong
 Hungary	HU	HUN	9772756	Europe	NewEpiCentre_Europe	47.162494	19.503304	Hungary	HUN	Europe	9769526	HUN	Europe	Hungary
 Iceland	IS	ISL	356991	Europe	NewEpiCentre_Europe	64.963051	-19.020835	Iceland	ISL	Europe	364134	ISL	Europe	Iceland
 India	IN	IND	1366417756	Asia	Asia_Spread	20.593684	78.96288	India	IND	Asia	1380004385	IND	Asia	India
 Indonesia	ID	IDN	270625567	Asia	Asia_Spread	-0.789275	113.921327	Indonesia	IDN	Asia	273523621	IDN	Asia	Indonesia
-Cases_on_an_international_conveyance_Japan	JPG11668	JPG11668	0	Asia	Worldwide_Spread	35.4496055	139.6340405	International conveyance cases Japan	JPG11668	Asia	0	JPG11668	Asia	International conveyance cases Japan
+Cases_on_an_international_conveyance_Japan	JPG11668	JPG11668	0	Asia	Worldwide_Spread	35.4496055	139.6340405	International conveyance cases Japan	JPG11668	Asia	0	JPG11668	Asia	International conveyance
 Iran	IR	IRN	82913893	Asia	Asia_Spread	32.427908	53.688046	Iran	IRN	Asia	83992953	IRN	Asia	Iran
 Iraq	IQ	IRQ	39309789	Asia	Asia_Spread	33.223191	43.679291	Iraq	IRQ	Asia	40222503	IRQ	Asia	Iraq
 Ireland	IE	IRL	4904240	Europe	NewEpiCentre_Europe	53.41291	-8.24389	Ireland	IRL	Europe	4964440	IRL	Europe	Ireland
@@ -155,7 +155,7 @@ Nicaragua	NI	NIC	6545503	North America	Worldwide_Spread	12.865416	-85.207229	Nic
 Niger	NE	NER	23310719	Africa	Worldwide_Spread	17.607789	8.081666	Niger	NER	Africa	24206636	NER	Africa	Niger
 Nigeria	NG	NGA	200963603	Africa	Worldwide_Spread	9.081999	8.675277	Nigeria	NGA	Africa	206139587	NGA	Africa	Nigeria
 Niue	NU	NIU		Oceania	Worldwide_Spread	-19.054445	-169.867233	Niue	NIU	Oceania	1626	NIU	Oceania	Niue
-Norfolk_Island	NF	NFK		Oceania	Worldwide_Spread	-29.040835	167.954712	Norfolk Island	NFK	Oceania		NFK	Oceania	Norfolk Island
+Norfolk_Island	NF	NFK		Oceania	Worldwide_Spread	-29.040835	167.954712	Norfolk Island	NFK	Oceania	1748	NFK	Oceania	Norfolk Island
 North_Korea	KP	PRK	25666161	Asia	Asia_Spread	40.339852	127.510093	North Korea	PRK	Asia	25778816	PRK	Asia	North Korea
 North_Macedonia	MK	MKD	2077132	Europe	NewEpiCentre_Europe	41.608635	21.745275	North Macedonia	MKD	Europe	2076255	MKD	Europe	North Macedonia
 Northern_Cyprus	CN	CYN	0	Europe / Asia	Europe/Asia_Spread	35.183333	33.366667	Northern Cyprus	CYN	Europe	0	CYN	Asia	Northern Cyprus
@@ -182,7 +182,7 @@ Saint_Barthelemy	BL	BLM	9847	North America	Worldwide_Spread	17.9	-62.8333	Saint 
 Saint_Helena	SH	SHN	6059	Africa	Worldwide_Spread	-24.143474	-10.030696	Saint Helena	SHN	Africa	6077	SHN	Africa	Saint Helena
 Saint_Kitts_and_Nevis	KN	KNA	52834	North America	Worldwide_Spread	17.357822	-62.782998	Saint Kitts and Nevis	KNA	America	53192	KNA	North America	Saint Kitts and Nevis
 Saint_Lucia	LC	LCA	182795	North America	Worldwide_Spread	13.909444	-60.978893	Saint Lucia	LCA	America	183629	LCA	North America	Saint Lucia
-Saint_Pierre_and_Miquelon	PM	SPM		North America	Worldwide_Spread	46.941936	-56.27111	Saint Pierre and Miquelon	SPM	North America		SPM	North America	Saint Pierre and Miquelon
+Saint_Pierre_and_Miquelon	PM	SPM		North America	Worldwide_Spread	46.941936	-56.27111	Saint Pierre and Miquelon	SPM	North America	5347	SPM	North America	Saint Pierre and Miquelon
 Saint_Vincent_and_the_Grenadines	VC	VCT	110593	North America	Worldwide_Spread	12.984305	-61.287228	Saint Vincent and the Grenadines	VCT	America	110947	VCT	North America	Saint Vincent and the Grenadines
 Samoa	WS	WSM	197097	Oceania	Worldwide_Spread	-13.759029	-172.104629	Samoa	WSM	Oceania	198414	WSM	Oceania	Samoa
 San_Marino	SM	SMR	33860	Europe	NewEpiCentre_Europe	43.94236	12.457777	San Marino	SMR	Europe	33931	SMR	Europe	San Marino
@@ -238,3 +238,14 @@ Western_Sahara	EH	SAH	582458	Africa	Worldwide_Spread	24.215527	-12.885834	Wester
 Yemen	YE	YEM	29161922	Asia	Asia_Spread	15.552727	48.516388	Yemen	YEM	Asia	29825968	YEM	Asia	Yemen
 Zambia	ZM	ZMB	17861034	Africa	Worldwide_Spread	-13.133897	27.849332	Zambia	ZMB	Africa	18383956	ZMB	Africa	Zambia
 Zimbabwe	ZW	ZWE	14645473	Africa	Worldwide_Spread	-19.015438	29.154857	Zimbabwe	ZWE	Africa	14862927	ZWE	Africa	Zimbabwe
+Bouvet_Island	BV	BVT		South America	Worldwide_Spread	-54.423199	3.413194	Bouvet Island	BVT	South America	0	BVT	South America	Bouvet Island
+Christmas_Island	CX	CXR		Oceania	Worldwide_Spread	-10.447525	105.690449	Christmas Island	CXR	Oceania		CXR	Oceania	Christmas Island
+Cocos_[Keeling]_Islands	CC	CCK		Oceania	Worldwide_Spread	-12.164165	96.870956	Cocos (Keeling) Islands	CCK	Oceania	596	CCK	Oceania	Cocos (Keeling) Islands
+French_Guiana	GF	GUF		South America	Worldwide_Spread	3.933889	-53.125782	French Guiana	GUF	America		GUF	South America	French Guiana
+Guadeloupe	GP	GLP		South America	Worldwide_Spread	16.995971	-62.067641	Guadeloupe	GLP	America		GLP	South America	Guadeloupe
+Martinique	MQ	MTQ		South America	Worldwide_Spread	14.641528	-61.024174	Martinique	MTQ	America		MTQ	South America	Martinique
+Mayotte	YT	MYT		Africa	Worldwide_Spread	-12.8275	45.166244	Mayotte	MYT	Africa		MYT	Africa	Mayotte
+Réunion	RE	REU		Africa	Worldwide_Spread	-21.115141	55.536384	Réunion	REU	Africa		REU	Africa	Réunion
+South_Georgia_and_the_South_Sandwich Islands	GS	SGS		South America	Worldwide_Spread	-54.429579	-36.587909	South Georgia and the South Sandwich Islands	SGS	America		SGS	South America	South Georgia and the South Sandwich Islands
+Svalbard_and_Jan_Mayen	SJ	SJM		Europe	NewEpiCentre_Europe	77.553604	23.670272	Svalbard and Jan Mayen	SJM	Europe	2583	SJM	Europe	Svalbard and Jan Mayen
+Tokelau	TK	TKL		Oceania	Worldwide_Spread	-8.967363	-171.855881	Tokelau	TKL	Oceania	1285	TKL	Oceania	Tokelau

@@ -1,7 +1,7 @@
 path:
-- https://api.github.com/repos/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/releases/assets/42627042
+- https://api.github.com/repos/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/releases/assets/42640299
 - data.rds
-rows: 109972
+rows: 110059
 cols: 62
 columns:
   iso_code: character
@@ -69,5 +69,5 @@ columns:
 description: owid-covid-data
 type: table
 filenames:
-  https://api.github.com/repos/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/releases/assets/42627042: data.csv
+  https://api.github.com/repos/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/releases/assets/42640299: data.csv
   data.rds: data.rds

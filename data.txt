@@ -1,0 +1,6 @@
+- path: owidcovid
+  name: owidcovid
+  rows: 109972
+  cols: 62
+  description: owid-covid-data
+  type: table

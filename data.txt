@@ -1,0 +1,6 @@
+- path: dt-COVID-19-owid-raw
+  name: dt-COVID-19-owid-raw
+  rows: 109972
+  cols: 62
+  description: owid-covid-data
+  type: table

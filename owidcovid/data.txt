@@ -1,0 +1,73 @@
+path:
+- https://api.github.com/repos/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/releases/assets/42651669
+- https://api.github.com/repos/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/releases/assets/42651882
+rows: 110059
+cols: 62
+columns:
+  iso_code: character
+  continent: character
+  location: character
+  date: Date
+  total_cases: numeric
+  new_cases: numeric
+  new_cases_smoothed: numeric
+  total_deaths: numeric
+  new_deaths: numeric
+  new_deaths_smoothed: numeric
+  total_cases_per_million: numeric
+  new_cases_per_million: numeric
+  new_cases_smoothed_per_million: numeric
+  total_deaths_per_million: numeric
+  new_deaths_per_million: numeric
+  new_deaths_smoothed_per_million: numeric
+  reproduction_rate: numeric
+  icu_patients: logical
+  icu_patients_per_million: logical
+  hosp_patients: logical
+  hosp_patients_per_million: logical
+  weekly_icu_admissions: logical
+  weekly_icu_admissions_per_million: logical
+  weekly_hosp_admissions: logical
+  weekly_hosp_admissions_per_million: logical
+  new_tests: logical
+  total_tests: logical
+  total_tests_per_thousand: logical
+  new_tests_per_thousand: logical
+  new_tests_smoothed: logical
+  new_tests_smoothed_per_thousand: logical
+  positive_rate: logical
+  tests_per_case: logical
+  tests_units: logical
+  total_vaccinations: numeric
+  people_vaccinated: numeric
+  people_fully_vaccinated: numeric
+  total_boosters: logical
+  new_vaccinations: numeric
+  new_vaccinations_smoothed: numeric
+  total_vaccinations_per_hundred: numeric
+  people_vaccinated_per_hundred: numeric
+  people_fully_vaccinated_per_hundred: numeric
+  total_boosters_per_hundred: logical
+  new_vaccinations_smoothed_per_million: numeric
+  stringency_index: numeric
+  population: numeric
+  population_density: numeric
+  median_age: numeric
+  aged_65_older: numeric
+  aged_70_older: numeric
+  gdp_per_capita: numeric
+  extreme_poverty: logical
+  cardiovasc_death_rate: numeric
+  diabetes_prevalence: numeric
+  female_smokers: logical
+  male_smokers: logical
+  handwashing_facilities: numeric
+  hospital_beds_per_thousand: numeric
+  life_expectancy: numeric
+  human_development_index: numeric
+  excess_mortality: logical
+description: owid-covid-data
+type: table
+filenames:
+  https://api.github.com/repos/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/releases/assets/42651669: data.csv
+  https://api.github.com/repos/reinpmomz/COVID-19-Geographic-Disbtribution-Worldwide/releases/assets/42651882: data.rds

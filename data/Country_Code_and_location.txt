@@ -242,8 +242,8 @@ Bouvet_Island	BV	BVT		South America	Worldwide_Spread	-54.423199	3.413194	Bouvet 
 Christmas_Island	CX	CXR		Oceania	Worldwide_Spread	-10.447525	105.690449	Christmas Island	CXR	Oceania		CXR	Oceania	Christmas Island
 Cocos_[Keeling]_Islands	CC	CCK		Oceania	Worldwide_Spread	-12.164165	96.870956	Cocos (Keeling) Islands	CCK	Oceania	596	CCK	Oceania	Cocos (Keeling) Islands
 French_Guiana	GF	GUF		South America	Worldwide_Spread	3.933889	-53.125782	French Guiana	GUF	America		GUF	South America	French Guiana
-Guadeloupe	GP	GLP		South America	Worldwide_Spread	16.995971	-62.067641	Guadeloupe	GLP	America		GLP	South America	Guadeloupe
-Martinique	MQ	MTQ		South America	Worldwide_Spread	14.641528	-61.024174	Martinique	MTQ	America		MTQ	South America	Martinique
+Guadeloupe	GP	GLP	400056	South America	Worldwide_Spread	16.995971	-62.067641	Guadeloupe	GLP	America	400124	GLP	South America	Guadeloupe
+Martinique	MQ	MTQ	375554	South America	Worldwide_Spread	14.641528	-61.024174	Martinique	MTQ	America	375265	MTQ	South America	Martinique
 Morocco	MA	MAR	36471766	Africa	Worldwide_Spread	31.791702	-7.09262	Morocco	MAR	Africa	36910558	MAR	Africa	Morocco
 Tunisia	TN	TUN	11694721	Africa	Worldwide_Spread	33.886917	9.537499	Tunisia	TUN	Africa	11818618	TUN	Africa	Tunisia
 South_Georgia_and_the_South_Sandwich Islands	GS	SGS		South America	Worldwide_Spread	-54.429579	-36.587909	South Georgia and the South Sandwich Islands	SGS	America		SGS	South America	South Georgia and the South Sandwich Islands
